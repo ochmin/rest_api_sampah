@@ -17,8 +17,7 @@ class Sampah extends Model
         'rt_rw',
         'kriteria',
         'total_karung_sampah',
-        'tanggal_pengangkut',
-        
+        'tanggal_pengangkutan',
     ];
 
     public $timestamps = false;

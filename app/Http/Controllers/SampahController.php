@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sampah;
-use Illuminate\Http\request;
 use App\Helpers\ApiFormatter;
 use Exception;
-
+use Illuminate\Http\Request;
 
 class SampahController extends Controller
 {
     
-    public function index(request $request)
+    public function index(Request $request)
     {
        
         $search = $request->search_name;
@@ -32,7 +31,7 @@ class SampahController extends Controller
    
 
 
-    public function store(request $request)
+    public function store(Request $request)
     {
         try {
                 // $request->validate([
@@ -43,9 +42,7 @@ class SampahController extends Controller
                 //  'tanggal_pengangkutan' => 'required',
                 // ]);
 
-                return response()->json($request->all());
-                
-            
+                // return response()->json($request->all());            
 
                 $sampahs = Sampah::create([
                  'kepala_keluarga' => $request->kepala_keluarga,
@@ -53,7 +50,7 @@ class SampahController extends Controller
                  'rt_rw' => $request->rt_rw,
                  'total_karung_sampah' => $request->total_karung_sampah,
                  'tanggal_pengangkutan' => $request->tanggal_pengangkutan,
-                 'kriteria' => 'test',
+                 'kriteria' => 'standar',
             ]);
         
 
@@ -77,7 +74,7 @@ class SampahController extends Controller
       try {
         $sampahs = Sampah::find($id);
         if ($sampahs) {
-            return ApiFormatter::createsAPI(200, 'success', $sampahs);
+            return ApiFormatter::createAPI(200, 'success', $sampahs);
         }else {
             return ApiFormatter::createAPI(400, 'failed');
         }
@@ -133,10 +130,10 @@ class SampahController extends Controller
             if ($cekBerhasil) {
                 return ApiFormatter::createAPI(200, 'success', 'Data terhapus');
             }else {
-                return ApiFormatter::createsAPI(400, 'failed');
+                return ApiFormatter::createAPI(400, 'failed');
             }
          }catch (Exception $error) {
-            return ApiFormatter::createsAPI(400, 'error', $error->getMessage());
+            return ApiFormatter::createAPI(400, 'error', $error->getMessage());
         }
         
     }
@@ -146,9 +143,9 @@ class SampahController extends Controller
         try {
             $sampahs = Sampah::onlyTrashed()->get();
             if ($sampahs) {
-                return ApiFormatter::createsAPI(200, 'success', $sampahs);
+                return ApiFormatter::createAPI(200, 'success', $sampahs);
             }else {
-                return ApiFormatter::createsAPI(400, 'failed');
+                return ApiFormatter::createAPI(400, 'failed');
             }
          }catch (Exception $error) {
             return ApiFormatter::createAPI(400, 'error', $error->getMessage());
